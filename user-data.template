@@ -1,0 +1,13 @@
+#cloud-config
+users:
+  - name: root
+    ssh_authorized_keys:
+
+write_files:
+- content: |
+    [Security]
+    Passphrase=NETWORK_PASS
+  path: /var/lib/iwd/SSID.psk
+
+runcmd:
+- systemctl restart iwd.service
