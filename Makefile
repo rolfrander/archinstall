@@ -13,6 +13,7 @@ else
 	@echo "Assumes there is exactly one USB-disk attached, found: ${USB_DISKS}"
 endif
 
+# https://wiki.archlinux.org/title/USB_flash_installation_medium#Using_the_ISO_as_is_(BIOS_and_UEFI)
 install:
 ifndef USB_DISK
 	$(error Expected exactly one USB disk, found: $(USB_DISKS))
@@ -20,7 +21,7 @@ endif
 	@dev=$$(readlink -f $(USB_DISK)); \
 	if lsblk -nrpo MOUNTPOINT $$dev | grep -q .; \
 	then echo "$$dev has mounted filesystems"  ; \
-	else sudo dd if=${ARCH_CIDATA} of=$(USB_DISK) bs=4M status=progress oflag=sync ; \
+	else sudo dd if=${ARCH_CIDATA} of=${USB_DISK} bs=4M status=progress conv=fsync oflag=direct ; \
 	fi
 	
 
