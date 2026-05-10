@@ -57,7 +57,18 @@ stage_1() {
     pacstrap -K /mnt base linux linux-firmware
     genfstab -U /mnt >> /mnt/etc/fstab
     cp $install /mnt/$install
-    arch-chroot /mnt bash $install 2
+    #arch-chroot /mnt bash $install 2
+    echo "stage 1 is done, ready for stage 2:"
+    echo " - chroot with: arch-chroot /mnt"
+    echo " - $install 2"
+    echo " - setup wired network (using systemd-networkd) with:"
+    echo "   $install add_vlan device vlan-id ip [vlan-id ip]*"
+    echo "   $install add_static device ip"
+    echo "   $install setup_wired"
+    echo "   check files in /etc/systemd/network"
+    echo " - or setup wireless (using netctl) with:"
+    echo "   $install setup_wireless"
+    echo "   check files in /etc/netctl"
 }
 
 stage_2() {
@@ -189,7 +200,8 @@ EOF
 if [[ $# -eq 0 ]] 
 then 
     curl $src > $install
-    echo "run: bash $install 1"
+    echo "run: bash $install format_btrfs"
+    echo "or: bash $install format_ext4"
 else
     if [ -r $efi_platform_size ]
     then
@@ -204,6 +216,12 @@ else
                 ;;
             mount)
                 do_mount
+                ;;
+            format_btrfs)
+                root_btrfs
+                ;;
+            format_ext4)
+                root_ext4)
                 ;;
             1)
                 # stage 1 is in the USB-root
