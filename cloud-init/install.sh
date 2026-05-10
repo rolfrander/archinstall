@@ -78,7 +78,9 @@ stage_2() {
     # update package database
     pacman -Sy --noconfirm
     # sluttbrukerverktøy
-    pacman -S --noconfirm zsh less vim sudo ed
+    pacman -S --noconfirm zsh less vim sudo ed bat eza fzf
+    # docker
+    pacman -S --noconfirm docker docker-compose docker-buildx
     # bootloader
     pacman -S --noconfirm efibootmgr grub
 
