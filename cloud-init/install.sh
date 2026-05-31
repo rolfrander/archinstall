@@ -77,8 +77,10 @@ stage_2() {
 
     # update package database
     pacman -Sy --noconfirm
+    # utils
+    pacman -S --noconfirm net-tools
     # sluttbrukerverktøy
-    pacman -S --noconfirm zsh less vim sudo ed bat eza fzf
+    pacman -S --noconfirm zsh less vim sudo ed bat eza fzf zsh-autosuggestions zsh-syntax-highlighting
     # docker
     pacman -S --noconfirm docker docker-compose docker-buildx
     # bootloader
@@ -195,12 +197,12 @@ DHCPClient='dhclient'
 EOF
 
     chmod +x /etc/netctl/hooks/dhcp
-    
+
 }
 
 
-if [[ $# -eq 0 ]] 
-then 
+if [[ $# -eq 0 ]]
+then
     curl $src > $install
     echo "run: bash $install format_btrfs"
     echo "or: bash $install format_ext4"
@@ -223,7 +225,7 @@ else
                 root_btrfs
                 ;;
             format_ext4)
-                root_ext4)
+                root_ext4
                 ;;
             1)
                 # stage 1 is in the USB-root
