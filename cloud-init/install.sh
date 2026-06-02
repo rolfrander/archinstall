@@ -85,7 +85,8 @@ stage_2() {
     pacman -S --noconfirm docker docker-compose docker-buildx
     # bootloader
     pacman -S --noconfirm efibootmgr grub
-
+    # extra pam-modules
+    pacman -S --noconfirm pam-u2f libpam-google-authenticator
     # sudoers
     sed -i -e '/wheel/{/NOPASSWD/n;s/^# *//;}' /etc/sudoers
 
